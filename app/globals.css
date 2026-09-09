@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+:root {
+  /* Forge Haven Academy brand tokens */
+  --color-forge-orange: #ff6700;
+  --color-forge-orange-dark: #cc5200;
+  --color-forge-black: #0a0a0a;
+  --color-forge-white: #ffffff;
+  --color-forge-cream: #faf9f7;
+  --color-forge-grey: #6b6b6b;
+
+  --background: var(--color-forge-white);
+  --foreground: var(--color-forge-black);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-forge-orange: var(--color-forge-orange);
+  --color-forge-orange-dark: var(--color-forge-orange-dark);
+  --color-forge-black: var(--color-forge-black);
+  --color-forge-white: var(--color-forge-white);
+  --color-forge-cream: var(--color-forge-cream);
+  --color-forge-grey: var(--color-forge-grey);
+
+  --font-sans: var(--font-postnord-sans);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
