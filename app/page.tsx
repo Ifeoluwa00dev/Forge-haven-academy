@@ -37,7 +37,7 @@ export default function Home() {
               Maximizing life through optimal performance
             </div>
 
-            <h1 className="mt-6 text-4xl font-medium leading-tight md:text-5xl">
+                        <h1 className="mt-6 text-4xl font-medium leading-tight md:text-6xl">
               Shaping potential into capability.
             </h1>
 
@@ -64,7 +64,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <div className="mx-auto mt-10 grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-3">
+                        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3">
               {[
                 { icon: ShieldCheck, label: "Ages 0–17 mentorship" },
                 { icon: Target, label: "Self-leadership focus" },
@@ -72,9 +72,9 @@ export default function Home() {
               ].map(({ icon: Icon, label }) => (
                 <div
                   key={label}
-                  className="flex items-center gap-2.5 rounded-lg border border-black/10 bg-white/80 p-3 text-left text-xs font-medium"
+                  className="flex items-center gap-3 rounded-lg border border-black/10 bg-white/80 p-4 text-left text-sm font-semibold md:text-base"
                 >
-                  <Icon className="h-4 w-4 shrink-0 text-forge-orange" />
+                  <Icon className="h-5 w-5 shrink-0 text-forge-orange" />
                   {label}
                 </div>
               ))}
