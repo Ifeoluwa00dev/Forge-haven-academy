@@ -14,11 +14,17 @@ export default function RegistrationForm({
   eventTitle,
   price,
   currency,
+  datesLabel,
+  timeLabel,
+  location,
 }: {
   eventId: string;
   eventTitle: string;
   price: number;
   currency: string;
+  datesLabel?: string;
+  timeLabel?: string;
+  location?: string;
 }) {
   const [parentName, setParentName] = useState("");
   const [parentEmail, setParentEmail] = useState("");
@@ -85,9 +91,31 @@ export default function RegistrationForm({
 
     setSubmitting(false);
 
-    if (childError) {
+        if (childError) {
       setError("Registration was saved, but there was an issue adding children. Please contact us.");
       return;
+    }
+
+    // Send confirmation email — best-effort. If this fails, the
+    // registration itself is already saved, so we don't block success.
+    try {
+      await fetch("/api/send-confirmation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          parentEmail,
+          parentName,
+          eventTitle,
+          referenceNumber,
+          price,
+          currency,
+          datesLabel,
+          timeLabel,
+          location,
+        }),
+      });
+    } catch (emailErr) {
+      console.error("Failed to send confirmation email:", emailErr);
     }
 
     if (price > 0) {
