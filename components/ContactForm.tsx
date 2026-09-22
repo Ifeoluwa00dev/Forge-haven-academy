@@ -51,37 +51,37 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="mb-1 block text-xs font-semibold text-forge-black/70">
+        <label className="mb-1 block text-sm font-semibold text-forge-black/70 dark:text-white/70">
           Your name
         </label>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forge-orange"
+          className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
           required
         />
       </div>
       <div>
-        <label className="mb-1 block text-xs font-semibold text-forge-black/70">
+        <label className="mb-1 block text-sm font-semibold text-forge-black/70 dark:text-white/70">
           Email
         </label>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forge-orange"
+          className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
           required
         />
       </div>
       <div>
-        <label className="mb-1 block text-xs font-semibold text-forge-black/70">
+        <label className="mb-1 block text-sm font-semibold text-forge-black/70 dark:text-white/70">
           Message
         </label>
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={5}
-          className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forge-orange"
+          className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
           required
         />
       </div>

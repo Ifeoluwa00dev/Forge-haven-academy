@@ -11,19 +11,17 @@ export default async function EventsPage() {
     .eq("is_active", true)
     .order("created_at", { ascending: true });
 
-    if (error) console.error("Supabase events error:", error);
-
   return (
     <div className="pb-20">
-      <section className="border-b border-black/10 bg-forge-cream py-16 text-center md:py-20">
+      <section className="border-b border-black/10 bg-forge-cream py-16 text-center dark:border-white/10 md:py-20">
         <div className="mx-auto max-w-3xl px-6">
-          <span className="text-xs font-semibold uppercase tracking-widest text-forge-orange">
+          <span className="text-sm font-semibold uppercase tracking-widest text-forge-orange">
             Events
           </span>
           <h1 className="mt-3 text-3xl font-medium md:text-5xl">
             Upcoming sessions
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-forge-black/70">
+          <p className="mx-auto mt-4 max-w-xl text-lg text-forge-black/70 dark:text-white/70">
             Registrations open below — reserve a spot while slots remain.
           </p>
         </div>
@@ -37,7 +35,7 @@ export default async function EventsPage() {
         )}
 
         {!error && (!events || events.length === 0) && (
-          <p className="text-forge-black/60">
+          <p className="text-forge-black/60 dark:text-white/60">
             No events are open for registration right now — check back soon.
           </p>
         )}
@@ -46,19 +44,19 @@ export default async function EventsPage() {
           {events?.map((event: DbEvent) => (
             <div
               key={event.id}
-              className="flex flex-col justify-between rounded-2xl border border-black/10 p-6 shadow-sm"
+              className="flex flex-col justify-between rounded-2xl border border-black/10 p-6 shadow-sm dark:border-white/10 dark:bg-forge-surface"
             >
               <div className="space-y-3">
-                <span className="inline-block rounded-full border border-forge-orange/30 bg-forge-orange/10 px-2.5 py-1 text-xs font-bold text-forge-orange-dark">
+                <span className="inline-block rounded-full border border-forge-orange/30 bg-forge-orange/10 px-2.5 py-1 text-sm font-bold text-forge-orange-dark dark:text-forge-orange">
                   {event.audience}
                 </span>
                 <h2 className="text-xl font-medium">{event.title}</h2>
-                <p className="text-sm text-forge-black/70">{event.description}</p>
+                <p className="text-base text-forge-black/70 dark:text-white/70">{event.description}</p>
 
-                <div className="space-y-1.5 border-t border-black/10 pt-3 text-xs text-forge-black/70">
+                <div className="space-y-1.5 border-t border-black/10 pt-3 text-sm text-forge-black/70 dark:border-white/10 dark:text-white/70">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-3.5 w-3.5 text-forge-orange" />
-                    <strong className="text-forge-black">{event.dates_label}</strong>
+                    <strong className="text-forge-black dark:text-white">{event.dates_label}</strong>
                     <span>({event.time_label})</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -75,9 +73,9 @@ export default async function EventsPage() {
                 </div>
               </div>
 
-              <div className="mt-5 flex items-center justify-between border-t border-black/10 pt-5">
+              <div className="mt-5 flex items-center justify-between border-t border-black/10 pt-5 dark:border-white/10">
                 <div>
-                  <span className="block text-[11px] font-semibold uppercase text-forge-black/50">
+                  <span className="block text-sm font-semibold uppercase text-forge-black/50 dark:text-white/50">
                     {event.price > 0 ? "Registration fee" : "Cost"}
                   </span>
                   <span className="text-lg font-medium">

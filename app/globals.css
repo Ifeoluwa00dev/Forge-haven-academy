@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  /* Forge Haven Academy brand tokens */
   --color-forge-orange: #ff6700;
   --color-forge-orange-dark: #cc5200;
   --color-forge-black: #0a0a0a;
@@ -23,8 +24,22 @@
   --color-forge-white: var(--color-forge-white);
   --color-forge-cream: var(--color-forge-cream);
   --color-forge-grey: var(--color-forge-grey);
+  --color-forge-surface: var(--color-forge-surface);
+  --color-forge-surface-alt: var(--color-forge-surface-alt);
 
   --font-sans: var(--font-postnord-sans);
+}
+
+:root {
+  --color-forge-surface: #ffffff;
+  --color-forge-surface-alt: var(--color-forge-cream);
+}
+.dark {
+  --color-forge-surface: #17171a;
+  --color-forge-surface-alt: #1f1f23;
+  --color-forge-cream: #17171a;
+  --background: var(--color-forge-black);
+  --foreground: var(--color-forge-white);
 }
 
 body {
