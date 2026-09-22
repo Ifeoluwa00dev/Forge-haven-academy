@@ -91,13 +91,46 @@ export default function RegistrationForm({
 
     setSubmitting(false);
 
-        if (childError) {
+    if (childError) {
       setError("Registration was saved, but there was an issue adding children. Please contact us.");
       return;
     }
 
-    // Send confirmation email — best-effort. If this fails, the
-    // registration itself is already saved, so we don't block success.
+    if (price > 0) {
+      // Paid event: create a Stripe Checkout session and send the parent
+      // there to pay. The confirmation email is sent by the webhook once
+      // payment actually succeeds, not here.
+      try {
+        const res = await fetch("/api/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            registrationId,
+            eventId,
+            eventTitle,
+            priceUsd: price,
+            parentEmail,
+          }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.url) {
+          throw new Error(data.error || "Failed to start checkout");
+        }
+
+        window.location.href = data.url;
+        return; // navigating away — nothing else to do here
+      } catch (checkoutErr) {
+        console.error("Checkout error:", checkoutErr);
+        setError(
+          "Your registration was saved, but we couldn't start the payment step. Please contact us to complete payment."
+        );
+        return;
+      }
+    }
+
+    // Free event — send confirmation immediately.
     try {
       await fetch("/api/send-confirmation", {
         method: "POST",
@@ -118,14 +151,7 @@ export default function RegistrationForm({
       console.error("Failed to send confirmation email:", emailErr);
     }
 
-    if (price > 0) {
-      // TODO: redirect to Paystack checkout once payment integration is wired up.
-      setSuccess(
-        `Registration received (ref: ${referenceNumber}). Payment collection is being finalized — we'll follow up shortly on how to complete your $${price} ${currency} payment.`
-      );
-    } else {
-      setSuccess(`You're registered! Your reference number is ${referenceNumber}.`);
-    }
+    setSuccess(`You're registered! Your reference number is ${referenceNumber}.`);
   };
 
   if (success) {
