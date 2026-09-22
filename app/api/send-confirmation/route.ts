@@ -8,7 +8,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // Until the real domain is verified in Resend, we send from the shared
 // testing address. Swap this to e.g. "Forge Haven Academy <hello@forgehavenacademy.org>"
 // once the domain is connected.
-const FROM_ADDRESS = "Forge Haven Academy <onboarding@resend.dev>";
+const FROM_ADDRESS = "Forge Haven Academy <hello@forgehavenacademy.com>";
 
 export async function POST(req: NextRequest) {
   try {
