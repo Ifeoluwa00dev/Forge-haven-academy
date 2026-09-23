@@ -24,10 +24,10 @@ export default function Header() {
             src="/brand/logo-icon.svg"
             alt=""
             aria-hidden="true"
-            className="h-9 w-9 md:h-11 md:w-11"
+            className="h-11 w-11 md:h-14 md:w-14"
           />
           <span className="leading-none">
-            <span className="block text-lg font-bold text-forge-black dark:text-white md:text-xl">
+            <span className="block text-xl font-bold text-forge-black dark:text-white md:text-2xl">
               Forge Haven
             </span>
             <span className="block text-[10px] font-medium tracking-widest text-forge-black/70 dark:text-white/70 md:text-xs">
