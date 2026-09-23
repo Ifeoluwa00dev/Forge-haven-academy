@@ -17,6 +17,7 @@ export default function RegistrationForm({
   datesLabel,
   timeLabel,
   location,
+  redirectUrl,
 }: {
   eventId: string;
   eventTitle: string;
@@ -25,6 +26,7 @@ export default function RegistrationForm({
   datesLabel?: string;
   timeLabel?: string;
   location?: string;
+  redirectUrl?: string;
 }) {
   const [parentName, setParentName] = useState("");
   const [parentEmail, setParentEmail] = useState("");
@@ -149,6 +151,12 @@ export default function RegistrationForm({
       });
     } catch (emailErr) {
       console.error("Failed to send confirmation email:", emailErr);
+    }
+
+            if (redirectUrl) {
+      const url = redirectUrl.startsWith("http") ? redirectUrl : `https://${redirectUrl}`;
+      window.location.href = url;
+      return;
     }
 
     setSuccess(`You're registered! Your reference number is ${referenceNumber}.`);

@@ -31,8 +31,10 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { error } = await supabaseAdmin.from("events").insert({
+    const { error } = await supabaseAdmin.from("events").insert({
     title,
+    slug: body.slug || null,
+    redirect_url: body.redirect_url || null,
     description: description || "",
     audience: audience || "",
     dates_label,
