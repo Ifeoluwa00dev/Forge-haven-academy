@@ -13,7 +13,8 @@ interface RegistrationRow {
   parent_phone: string;
   payment_status: string;
   created_at: string;
-  events: { title: string } | null;
+  custom_field_answers: Record<string, string | boolean> | null;
+  events: { title: string; custom_fields: { id: string; label: string }[] } | null;
   registration_children: { child_name: string; child_age: number | null }[];
 }
 

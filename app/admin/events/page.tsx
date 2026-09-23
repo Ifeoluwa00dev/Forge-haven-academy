@@ -9,10 +9,11 @@ import AdminNav from "@/components/AdminNav";
 
 
 interface EventRow {
-  slug: string;
-  redirect_url: string;
   id: string;
   title: string;
+  slug: string | null;
+  redirect_url: string | null;
+  custom_fields: { id: string; label: string; type: string; required: boolean; options?: string[] }[];
   description: string;
   audience: string;
   dates_label: string;
