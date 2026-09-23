@@ -3,12 +3,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Pencil } from "lucide-react";
+import CustomFieldsEditor from "@/components/CustomFieldsEditor";
+import type { CustomField } from "@/lib/custom-fields";
 
 interface EventFormData {
   id?: string;
   title: string;
   slug: string;
   redirect_url: string;
+   custom_fields: CustomField[];
   description: string;
   audience: string;
   dates_label: string;
@@ -26,6 +29,7 @@ const EMPTY_FORM: EventFormData = {
   title: "",
   slug: "",
   redirect_url: "",
+  custom_fields: [],
   description: "",
   audience: "",
   dates_label: "",
@@ -239,6 +243,12 @@ export default function CreateEventForm({
             value={form.slots_total}
             onChange={(e) => update("slots_total", e.target.value)}
             className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface-alt"
+          />
+        </div>
+                <div className="sm:col-span-2">
+          <CustomFieldsEditor
+            fields={form.custom_fields}
+            onChange={(fields) => update("custom_fields" as any, fields as any)}
           />
         </div>
                 <div>

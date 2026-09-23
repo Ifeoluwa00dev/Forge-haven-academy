@@ -14,7 +14,8 @@ interface RegistrationRow {
   parent_phone: string;
   payment_status: string;
   created_at: string;
-  events: { title: string } | null;
+  custom_field_answers: Record<string, string | boolean> | null;
+  events: { title: string; custom_fields: { id: string; label: string }[] } | null;
   registration_children: { child_name: string; child_age: number | null }[];
 }
 
@@ -22,10 +23,10 @@ export default async function AdminPage() {
   const authed = await isAdminAuthenticated();
   if (!authed) redirect("/admin/login");
 
-  const { data, error } = await supabaseAdmin
+    const { data, error } = await supabaseAdmin
     .from("registrations")
     .select(
-      "id, reference_number, parent_name, parent_email, parent_phone, payment_status, created_at, events(title), registration_children(child_name, child_age)"
+      "id, reference_number, parent_name, parent_email, parent_phone, payment_status, created_at, custom_field_answers, events(title, custom_fields), registration_children(child_name, child_age)"
     )
     .order("created_at", { ascending: false });
 

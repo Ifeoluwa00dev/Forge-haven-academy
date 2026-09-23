@@ -57,6 +57,7 @@ export default function AdminEventsPage() {
       title: e.title,
       slug: e.slug || "",
       redirect_url: e.redirect_url || "",
+      custom_fields: e.custom_fields || [],
       description: e.description || "",
       audience: e.audience || "",
       dates_label: e.dates_label,

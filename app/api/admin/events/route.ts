@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
     title,
     slug: body.slug || null,
     redirect_url: body.redirect_url || null,
+    custom_fields: body.custom_fields || [],
     description: description || "",
     audience: audience || "",
     dates_label,

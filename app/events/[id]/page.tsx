@@ -60,6 +60,7 @@ export default async function EventDetailPage({
           datesLabel={event.dates_label}
           timeLabel={event.time_label}
           location={event.location}
+          customFields={event.custom_fields || []}
         />
       </section>
     </div>

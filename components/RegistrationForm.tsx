@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Plus, Trash2, CheckCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import type { CustomField } from "@/lib/custom-fields";
 
 interface Child {
   name: string;
@@ -18,6 +19,7 @@ export default function RegistrationForm({
   timeLabel,
   location,
   redirectUrl,
+  customFields = [],
 }: {
   eventId: string;
   eventTitle: string;
@@ -27,11 +29,17 @@ export default function RegistrationForm({
   timeLabel?: string;
   location?: string;
   redirectUrl?: string;
+  customFields?: CustomField[];
 }) {
   const [parentName, setParentName] = useState("");
   const [parentEmail, setParentEmail] = useState("");
   const [parentPhone, setParentPhone] = useState("");
   const [children, setChildren] = useState<Child[]>([{ name: "", age: "" }]);
+    const [customAnswers, setCustomAnswers] = useState<Record<string, string | boolean>>({});
+
+  const updateCustomAnswer = (fieldId: string, value: string | boolean) => {
+    setCustomAnswers((a) => ({ ...a, [fieldId]: value }));
+  };
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -56,6 +64,12 @@ export default function RegistrationForm({
       setError("Please enter a name for each child.");
       return;
     }
+        for (const field of customFields) {
+      if (field.required && !customAnswers[field.id]) {
+        setError(`Please fill in: ${field.label}`);
+        return;
+      }
+    }
 
     setSubmitting(true);
 
@@ -73,6 +87,7 @@ export default function RegistrationForm({
       parent_phone: parentPhone,
       payment_status: price > 0 ? "pending" : "free",
       reference_number: referenceNumber,
+      custom_field_answers: customAnswers,
     });
 
     if (regError) {
@@ -269,9 +284,67 @@ export default function RegistrationForm({
             )}
           </div>
         ))}
-      </div>
+            </div>
 
-      {error && (
+      {customFields.length > 0 && (
+        <div className="space-y-4">
+          <label className="text-sm font-semibold text-forge-black/70 dark:text-white/70">
+            Additional information
+          </label>
+          {customFields.map((field) => (
+            <div key={field.id}>
+              <label className="mb-1 block text-sm text-forge-black/60 dark:text-white/60">
+                {field.label} {field.required && <span className="text-forge-orange">*</span>}
+              </label>
+
+              {field.type === "text" && (
+                <input
+                  value={(customAnswers[field.id] as string) || ""}
+                  onChange={(e) => updateCustomAnswer(field.id, e.target.value)}
+                  className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
+                />
+              )}
+
+              {field.type === "textarea" && (
+                <textarea
+                  value={(customAnswers[field.id] as string) || ""}
+                  onChange={(e) => updateCustomAnswer(field.id, e.target.value)}
+                  rows={3}
+                  className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
+                />
+              )}
+
+              {field.type === "select" && (
+                <select
+                  value={(customAnswers[field.id] as string) || ""}
+                  onChange={(e) => updateCustomAnswer(field.id, e.target.value)}
+                  className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
+                >
+                  <option value="">Select an option</option>
+                  {(field.options || []).map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              )}
+
+              {field.type === "checkbox" && (
+                <label className="flex items-center gap-2 text-sm text-forge-black/70 dark:text-white/70">
+                  <input
+                    type="checkbox"
+                    checked={(customAnswers[field.id] as boolean) || false}
+                    onChange={(e) => updateCustomAnswer(field.id, e.target.checked)}
+                  />
+                  Yes
+                </label>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {error && (   
         <p className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
           {error}
         </p>

@@ -53,10 +53,11 @@ export async function PATCH(
 
   const { error } = await supabaseAdmin
     .from("events")
-    .update({
+        .update({
       title,
       slug: body.slug || null,
       redirect_url: body.redirect_url || null,
+      custom_fields: body.custom_fields || [],
       description,
       audience,
       dates_label,

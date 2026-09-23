@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 import ExportCsvButton from "@/components/ExportCsvButton";
+import EditRegistrationModal from "@/components/EditRegistrationModal";
+import { Pencil } from "lucide-react";
 
 interface RegistrationRow {
   id: string;
@@ -29,6 +31,7 @@ export default function RegistrationsTable({
   }, [registrations]);
 
   const [selectedEvent, setSelectedEvent] = useState<string>("all");
+    const [editingRegistration, setEditingRegistration] = useState<RegistrationRow | null>(null);
 
   const filtered = useMemo(() => {
     if (selectedEvent === "all") return registrations;
@@ -45,9 +48,19 @@ export default function RegistrationsTable({
       parent_email: r.parent_email,
       parent_phone: r.parent_phone,
       payment_status: r.payment_status,
-      event_title: r.events?.title || "",
+            event_title: r.events?.title || "",
       child_name: c.child_name,
       child_age: c.child_age,
+      additional_info: r.custom_field_answers
+        ? Object.entries(r.custom_field_answers)
+            .map(([fieldId, value]) => {
+              const fieldDef = r.events?.custom_fields?.find((f) => f.id === fieldId);
+              const label = fieldDef?.label || fieldId;
+              const displayValue = typeof value === "boolean" ? (value ? "Yes" : "No") : String(value);
+              return `${label}: ${displayValue}`;
+            })
+            .join("; ")
+        : "",
       created_at: r.created_at,
     }))
   );
@@ -92,13 +105,15 @@ export default function RegistrationsTable({
                 <th className="px-4 py-3">Parent</th>
                 <th className="px-4 py-3">Contact</th>
                 <th className="px-4 py-3">Children</th>
-                <th className="px-4 py-3">Status</th>
+                                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Additional info</th>
                 <th className="px-4 py-3">Registered</th>
+                <th className="px-4 py-3"></th>
               </tr>
             </thead>
             <tbody>
               {filtered.map((r) => (
-                <tr key={r.id} className="border-t border-black/10">
+                                <tr key={r.id} className="border-t border-black/10 dark:border-white/10">
                   <td className="px-4 py-3 font-mono text-xs">{r.reference_number}</td>
                   <td className="px-4 py-3">{r.events?.title || "—"}</td>
                   <td className="px-4 py-3">{r.parent_name}</td>
@@ -125,14 +140,47 @@ export default function RegistrationsTable({
                       {r.payment_status}
                     </span>
                   </td>
-                                    <td className="px-4 py-3 text-forge-black/60">
+                                    <td className="px-4 py-3 text-xs text-forge-black/70 dark:text-white/70">
+                    {r.custom_field_answers && Object.keys(r.custom_field_answers).length > 0
+                      ? Object.entries(r.custom_field_answers).map(([fieldId, value]) => {
+                          const fieldDef = r.events?.custom_fields?.find((f) => f.id === fieldId);
+                          const label = fieldDef?.label || fieldId;
+                          const displayValue =
+                            typeof value === "boolean" ? (value ? "Yes" : "No") : String(value);
+                          return (
+                            <div key={fieldId}>
+                              <strong>{label}:</strong> {displayValue}
+                            </div>
+                          );
+                        })
+                      : "—"}
+                  </td>
+                                                      <td className="px-4 py-3 text-forge-black/60 dark:text-white/60">
                     {new Date(r.created_at).toLocaleDateString("en-US")}
+                  </td>
+                  <td className="px-4 py-3">
+                    <button
+                      onClick={() => setEditingRegistration(r)}
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-forge-black/50 hover:text-forge-orange dark:text-white/50"
+                    >
+                      <Pencil className="h-3.5 w-3.5" /> Edit
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+      )}
+            {editingRegistration && (
+        <EditRegistrationModal
+          registration={editingRegistration}
+          onClose={() => setEditingRegistration(null)}
+          onSaved={() => {
+            setEditingRegistration(null);
+            window.location.reload();
+          }}
+        />
       )}
     </div>
   );

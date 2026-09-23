@@ -10,6 +10,7 @@ interface Row {
   payment_status: string;
   event_title: string;
   child_name: string;
+  additional_info: string;
   child_age: number | null;
   created_at: string;
 }
@@ -24,6 +25,7 @@ function toCsv(rows: Row[]): string {
     "Payment Status",
     "Child Name",
     "Child Age",
+    "Additional Info",
     "Registered At",
   ];
 
@@ -40,6 +42,7 @@ function toCsv(rows: Row[]): string {
       r.payment_status,
       r.child_name,
       r.child_age,
+       r.additional_info,
       r.created_at,
     ]
       .map(escape)
