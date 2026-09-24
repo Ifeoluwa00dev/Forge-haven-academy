@@ -60,8 +60,8 @@ export default async function EventBySlugPage({
           datesLabel={event.dates_label}
           timeLabel={event.time_label}
           location={event.location}
-          customFields={event.custom_fields || []}
           redirectUrl={event.redirect_url}
+          customFields={event.custom_fields || []}
         />
       </section>
     </div>
