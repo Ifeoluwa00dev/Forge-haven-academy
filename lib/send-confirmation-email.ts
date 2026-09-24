@@ -49,7 +49,7 @@ export async function sendRegistrationConfirmation(params: ConfirmationEmailPara
         <p>Hi ${parentName || "there"},</p>
         <p>We've received your registration for <strong>${eventTitle}</strong>.</p>
         <div style="background: #faf9f7; border-radius: 12px; padding: 16px; margin: 20px 0;">
-          <p style="margin: 4px 0;"><strong>Reference number:</strong> ${referenceNumber}</p>
+          <!-- Reference number hidden per client request (Sep 2026): <p style="margin: 4px 0;"><strong>Reference number:</strong> ${referenceNumber}</p> -->
           ${datesLabel ? `<p style="margin: 4px 0;"><strong>Date:</strong> ${datesLabel}${timeLabel ? ` (${timeLabel})` : ""}</p>` : ""}
           ${location ? `<p style="margin: 4px 0;"><strong>Location:</strong> ${location}</p>` : ""}
         </div>
