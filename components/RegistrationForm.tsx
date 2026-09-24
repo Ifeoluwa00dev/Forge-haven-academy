@@ -35,11 +35,7 @@ export default function RegistrationForm({
   const [parentEmail, setParentEmail] = useState("");
   const [parentPhone, setParentPhone] = useState("");
   const [children, setChildren] = useState<Child[]>([{ name: "", age: "" }]);
-    const [customAnswers, setCustomAnswers] = useState<Record<string, string | boolean>>({});
-
-  const updateCustomAnswer = (fieldId: string, value: string | boolean) => {
-    setCustomAnswers((a) => ({ ...a, [fieldId]: value }));
-  };
+  const [customAnswers, setCustomAnswers] = useState<Record<string, string | boolean>>({});
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -52,6 +48,10 @@ export default function RegistrationForm({
       c.map((child, i) => (i === idx ? { ...child, [field]: value } : child))
     );
 
+  const updateCustomAnswer = (fieldId: string, value: string | boolean) => {
+    setCustomAnswers((a) => ({ ...a, [fieldId]: value }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -60,9 +60,14 @@ export default function RegistrationForm({
       setError("Please fill in your name, email, and phone number.");
       return;
     }
-    
-    }
-        for (const field of customFields) {
+
+    // Name validation disabled — field is hidden per client request (Sep 2026).
+    // if (children.some((c) => !c.name)) {
+    //   setError("Please enter a name for each child.");
+    //   return;
+    // }
+
+    for (const field of customFields) {
       if (field.required && !customAnswers[field.id]) {
         setError(`Please fill in: ${field.label}`);
         return;
@@ -70,15 +75,8 @@ export default function RegistrationForm({
     }
 
     setSubmitting(true);
-// Name validation disabled — field is hidden per client request (Sep 2026).
-    // if (children.some((c) => !c.name)) {
-    //   setError("Please enter a name for each child.");
-    //   return;
-    // }
+
     const referenceNumber = `FHA-${Date.now().toString(36).toUpperCase()}`;
-    // Generate the id ourselves so we never need to read the row back
-    // (the anon role intentionally has no SELECT grant on registrations,
-    // to keep parent/child data unreadable via the public API).
     const registrationId = crypto.randomUUID();
 
     const { error: regError } = await supabase.from("registrations").insert({
@@ -139,7 +137,7 @@ export default function RegistrationForm({
         }
 
         window.location.href = data.url;
-        return; // navigating away — nothing else to do here
+        return;
       } catch (checkoutErr) {
         console.error("Checkout error:", checkoutErr);
         setError(
@@ -147,6 +145,12 @@ export default function RegistrationForm({
         );
         return;
       }
+    }
+
+    if (redirectUrl) {
+      const url = redirectUrl.startsWith("http") ? redirectUrl : `https://${redirectUrl}`;
+      window.location.href = url;
+      return;
     }
 
     // Free event — send confirmation immediately.
@@ -170,12 +174,6 @@ export default function RegistrationForm({
       console.error("Failed to send confirmation email:", emailErr);
     }
 
-            if (redirectUrl) {
-      const url = redirectUrl.startsWith("http") ? redirectUrl : `https://${redirectUrl}`;
-      window.location.href = url;
-      return;
-    }
-
     setSuccess(`You're registered! Your reference number is ${referenceNumber}.`);
   };
 
@@ -197,174 +195,4 @@ export default function RegistrationForm({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="sm:col-span-2">
-          <label className="mb-1 block text-sm font-semibold text-forge-black/70 dark:text-white/70">
-            Parent / guardian name
-          </label>
-          <input
-            value={parentName}
-            onChange={(e) => setParentName(e.target.value)}
-            className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
-            required
-          />
-        </div>
-        <div>
-          <label className="mb-1 block text-sm font-semibold text-forge-black/70 dark:text-white/70">
-            Email
-          </label>
-          <input
-            type="email"
-            value={parentEmail}
-            onChange={(e) => setParentEmail(e.target.value)}
-            className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
-            required
-          />
-        </div>
-        <div>
-          <label className="mb-1 block text-sm font-semibold text-forge-black/70 dark:text-white/70">
-            Phone number
-          </label>
-          <input
-            type="tel"
-            value={parentPhone}
-            onChange={(e) => setParentPhone(e.target.value)}
-            className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
-            required
-          />
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <label className="text-sm font-semibold text-forge-black/70 dark:text-white/70">
-            Child / children registering
-          </label>
-          <button
-            type="button"
-            onClick={addChild}
-            className="inline-flex items-center gap-1 text-sm font-semibold text-forge-orange-dark hover:text-forge-orange dark:text-forge-orange"
-          >
-            <Plus className="h-3.5 w-3.5" /> Add another child
-          </button>
-        </div>
-
-        {children.map((child, idx) => (
-          <div
-            key={idx}
-            className="grid grid-cols-1 gap-3 rounded-xl border border-black/10 p-4 dark:border-white/10 sm:grid-cols-[1fr_120px_auto] sm:items-end"
-          >
-            {/* Child's name field — hidden per client request (Sep 2026), may return later.
-            <div>
-              <label className="mb-1 block text-sm text-forge-black/60 dark:text-white/60">
-                Child&apos;s name
-              </label>
-              <input
-                value={child.name}
-                onChange={(e) => updateChild(idx, "name", e.target.value)}
-                className="w-full rounded-lg border border-black/15 px-3 py-2 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
-                required
-              />
-            </div>
-            */}
-            <div>
-              <label className="mb-1 block text-sm text-forge-black/60 dark:text-white/60">Age</label>
-              <input
-                type="number"
-                min={0}
-                value={child.age}
-                onChange={(e) => updateChild(idx, "age", e.target.value)}
-                className="w-full rounded-lg border border-black/15 px-3 py-2 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
-              />
-            </div>
-            {children.length > 1 && (
-              <button
-                type="button"
-                onClick={() => removeChild(idx)}
-                className="inline-flex items-center justify-center gap-1 rounded-lg border border-black/10 px-3 py-2 text-sm text-forge-black/60 hover:border-red-300 hover:text-red-600 dark:border-white/15 dark:text-white/60"
-              >
-                <Trash2 className="h-3.5 w-3.5" /> Remove
-              </button>
-            )}
-          </div>
-        ))}
-            </div>
-
-      {customFields.length > 0 && (
-        <div className="space-y-4">
-          <label className="text-sm font-semibold text-forge-black/70 dark:text-white/70">
-            Additional information
-          </label>
-          {customFields.map((field) => (
-            <div key={field.id}>
-              <label className="mb-1 block text-sm text-forge-black/60 dark:text-white/60">
-                {field.label} {field.required && <span className="text-forge-orange">*</span>}
-              </label>
-
-              {field.type === "text" && (
-                <input
-                  value={(customAnswers[field.id] as string) || ""}
-                  onChange={(e) => updateCustomAnswer(field.id, e.target.value)}
-                  className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
-                />
-              )}
-
-              {field.type === "textarea" && (
-                <textarea
-                  value={(customAnswers[field.id] as string) || ""}
-                  onChange={(e) => updateCustomAnswer(field.id, e.target.value)}
-                  rows={3}
-                  className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
-                />
-              )}
-
-              {field.type === "select" && (
-                <select
-                  value={(customAnswers[field.id] as string) || ""}
-                  onChange={(e) => updateCustomAnswer(field.id, e.target.value)}
-                  className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-base outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface"
-                >
-                  <option value="">Select an option</option>
-                  {(field.options || []).map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
-                    </option>
-                  ))}
-                </select>
-              )}
-
-              {field.type === "checkbox" && (
-                <label className="flex items-center gap-2 text-sm text-forge-black/70 dark:text-white/70">
-                  <input
-                    type="checkbox"
-                    checked={(customAnswers[field.id] as boolean) || false}
-                    onChange={(e) => updateCustomAnswer(field.id, e.target.checked)}
-                  />
-                  Yes
-                </label>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-
-      {error && (   
-        <p className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-          {error}
-        </p>
-      )}
-
-      <button
-        type="submit"
-        disabled={submitting}
-        className="w-full rounded-xl bg-forge-orange px-6 py-3.5 font-medium text-white transition-colors hover:bg-forge-orange-dark disabled:opacity-60"
-      >
-        {submitting
-          ? "Submitting..."
-          : price > 0
-          ? `Continue — $${price} per child`
-          : "Complete registration"}
-      </button>
-    </form>
-  );
-}
+      <div className="grid grid-cols-
