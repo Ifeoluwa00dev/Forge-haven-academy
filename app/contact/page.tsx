@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, AtSign, Users } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
 
 export default function ContactPage() {
@@ -22,15 +22,41 @@ export default function ContactPage() {
           <div className="space-y-4 text-base text-forge-black/70 dark:text-white/70">
             <div className="flex items-start gap-3">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-forge-orange" />
-              Address to be confirmed
+              5900 Balcones Drive, Austin, TX 78731, USA
             </div>
             <div className="flex items-center gap-3">
               <Phone className="h-4 w-4 shrink-0 text-forge-orange" />
-              Phone to be confirmed
+              <a href="tel:+13465011249" className="hover:text-forge-orange">
+                +1 (346) 501-1249
+              </a>
             </div>
             <div className="flex items-center gap-3">
               <Mail className="h-4 w-4 shrink-0 text-forge-orange" />
-              Use the form to reach us by email
+              <a href="mailto:forgehavenacademy@gmail.com" className="hover:text-forge-orange">
+                forgehavenacademy@gmail.com
+              </a>
+            </div>
+            <div className="flex items-center gap-3">
+              <AtSign className="h-4 w-4 shrink-0 text-forge-orange" />
+              <a
+                href="https://instagram.com/forgehavenacademy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-forge-orange"
+              >
+                @forgehavenacademy
+              </a>
+            </div>
+            <div className="flex items-center gap-3">
+              <Users className="h-4 w-4 shrink-0 text-forge-orange" />
+              <a
+                href="https://facebook.com/forgehavenacademy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-forge-orange"
+              >
+                Forge Haven Academy
+              </a>
             </div>
           </div>
         </div>
