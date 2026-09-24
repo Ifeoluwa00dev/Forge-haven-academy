@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
 
+import { Mail, Phone, MapPin, Instagram, Facebook } from "lucide-react";
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-forge-black pt-14 pb-10 text-white">
@@ -78,17 +78,41 @@ export default function Footer() {
             <ul className="space-y-3 text-xs text-white/70">
               <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-forge-orange" />
-                <span>Address to be confirmed</span>
+                <span>5900 Balcones Drive, Austin, TX 78731, USA</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 shrink-0 text-forge-orange" />
-                <Link href="/contact" className="hover:text-white">
-                  Contact us via the Contact page
-                </Link>
+                <a href="mailto:forgehavenacademy@gmail.com" className="hover:text-white">
+                  forgehavenacademy@gmail.com
+                </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 shrink-0 text-forge-orange" />
-                <span>Phone to be confirmed</span>
+                <a href="tel:+13465011249" className="hover:text-white">
+                  +1 (346) 501-1249
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Instagram className="h-4 w-4 shrink-0 text-forge-orange" />
+                <a
+                  href="https://instagram.com/forgehavenacademy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
+                  @forgehavenacademy
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Facebook className="h-4 w-4 shrink-0 text-forge-orange" />
+                <a
+                  href="https://facebook.com/forgehavenacademy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
+                  Forge Haven Academy
+                </a>
               </li>
             </ul>
           </div>
