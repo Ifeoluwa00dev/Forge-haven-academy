@@ -174,7 +174,7 @@ export default function RegistrationForm({
       console.error("Failed to send confirmation email:", emailErr);
     }
 
-    setSuccess(`You're registered! Your reference number is ${referenceNumber}.`);
+    setSuccess(`You're registered!.`);
   };
 
   if (success) {
