@@ -122,7 +122,7 @@ export default function CreateEventForm({
       onSubmit={handleSubmit}
       className="mb-8 space-y-4 rounded-2xl border border-black/10 p-6 dark:border-white/10 dark:bg-forge-surface"
     >
-      <h2 className="flex items-center gap-2 text-lg font-medium">
+      <h2 className="flex items-center gap-2 text-lg font-medium text-forge-black dark:text-white">
         {isEditing && <Pencil className="h-4 w-4" />}
         {isEditing ? `Edit "${editingEvent?.title}"` : "Create a new event"}
       </h2>
