@@ -5,6 +5,7 @@ import { Plus, Trash2, CheckCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { CustomField } from "@/lib/custom-fields";
 
+
 interface Child {
   name: string;
   age: string;
