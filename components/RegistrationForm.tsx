@@ -237,7 +237,7 @@ export default function RegistrationForm({
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <label className="text-sm font-semibold text-forge-black/70 dark:text-white/70">
-            Child / children registering
+            Child(ren)'s registering
           </label>
           <button
             type="button"

@@ -13,6 +13,21 @@ import { supabase, DbEvent } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
+const TEAM = [
+  {
+    name: "Olabisi Olaleye",
+    role: "Founder · Certified Parenting Coach & Educator",
+    initials: "OO",
+    bio: "Olabisi is a Certified Parenting Coach, Educator, and Speaker, dedicated to strengthening families and empowering young people through intentional development, mentorship, and meaningful conversations. She holds a Bachelor's degree in French Language from Obafemi Awolowo University and an MBA from Prairie View A&M University, Texas.",
+  },
+  {
+    name: "Femi Olaleye",
+    role: "Systems Quality Engineer, Apple",
+    initials: "FO",
+    bio: "Femi is a husband, father of two boys, and a passionate advocate for intentional parenting and raising children with strong spiritual foundations. He brings a unique perspective on balancing faith, family, and career, and is committed to building a Christ-centered home rooted in presence, purpose, and connection.",
+  },
+];
+
 export default async function Home() {
   const { data: events } = await supabase
     .from("events")
@@ -25,15 +40,21 @@ export default async function Home() {
 
   return (
     <div className="pb-20">
+      {/* HERO */}
       <section className="relative overflow-hidden border-b border-black/10 dark:border-white/10">
+                {/* Real photo background — all breakpoints */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.05] dark:opacity-[0.08]"
+          className="absolute inset-0"
           style={{
-            backgroundImage: "url('/brand/pattern.svg')",
-            backgroundSize: "420px",
-            backgroundRepeat: "repeat",
+            backgroundImage:
+              "url('https://res.cloudinary.com/drkksaa3i/image/upload/v1790260320/pexels-yankrukov-8612958_mj7yvd.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
-        />
+        >
+          <div className="absolute inset-0 bg-white/85 dark:bg-forge-black/85" />
+        </div>
+
         <div className="relative mx-auto max-w-6xl px-6 pt-16 pb-20 md:pt-24 md:pb-28">
           <div className="mx-auto max-w-2xl text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-1.5 text-sm font-medium shadow-sm dark:border-white/10 dark:bg-forge-surface">
@@ -87,6 +108,7 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* PROGRAMS — dynamic, pulled from live events */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <span className="text-sm font-semibold uppercase tracking-widest text-forge-orange">
@@ -144,6 +166,7 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* FEATURED EVENT */}
       {featuredEvent && (
         <section className="border-y border-black/10 bg-forge-cream py-16 dark:border-white/10">
           <div className="mx-auto max-w-6xl px-6">
@@ -213,6 +236,26 @@ export default async function Home() {
         </section>
       )}
 
+      
+            {/* TEAM TEASER */}
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="flex flex-col items-center gap-6 rounded-3xl border border-black/10 p-10 text-center shadow-sm dark:border-white/10 dark:bg-forge-surface md:p-14">
+          <span className="text-sm font-semibold uppercase tracking-widest text-forge-orange">
+            Meet the team
+          </span>
+          <h2 className="max-w-xl text-3xl font-medium md:text-4xl">
+            The people behind Forge Haven.
+          </h2>
+          <Link
+            href="/team"
+            className="inline-flex items-center gap-2 rounded-xl bg-forge-orange px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-forge-orange-dark"
+          >
+            Meet the team <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+
+      {/* CTA STRIP */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="rounded-3xl bg-forge-black p-10 text-center text-white md:p-14">
           <span className="text-sm font-semibold uppercase tracking-widest text-forge-orange">
