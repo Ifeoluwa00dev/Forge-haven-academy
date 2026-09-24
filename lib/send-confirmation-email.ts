@@ -54,9 +54,9 @@ export async function sendRegistrationConfirmation(params: ConfirmationEmailPara
           ${location ? `<p style="margin: 4px 0;"><strong>Location:</strong> ${location}</p>` : ""}
         </div>
         ${paymentLine}
-        <p style="margin-top: 24px; color: #6b6b6b; font-size: 13px;">
+       <!-- <p style="margin-top: 24px; color: #6b6b6b; font-size: 13px;">
           Please keep this reference number for check-in on the day of the event.
-        </p>
+        </p> -->
       </div>
     `,
   });
