@@ -252,6 +252,7 @@ export default function RegistrationForm({
             key={idx}
             className="grid grid-cols-1 gap-3 rounded-xl border border-black/10 p-4 dark:border-white/10 sm:grid-cols-[1fr_120px_auto] sm:items-end"
           >
+            {/* Child's name field — hidden per client request (Sep 2026), may return later.
             <div>
               <label className="mb-1 block text-sm text-forge-black/60 dark:text-white/60">
                 Child&apos;s name
@@ -263,6 +264,7 @@ export default function RegistrationForm({
                 required
               />
             </div>
+            */}
             <div>
               <label className="mb-1 block text-sm text-forge-black/60 dark:text-white/60">Age</label>
               <input
