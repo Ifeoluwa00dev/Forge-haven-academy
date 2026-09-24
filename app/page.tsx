@@ -1,22 +1,27 @@
 import Link from "next/link";
 import {
   Compass,
-  HeartHandshake,
   Calendar,
   MapPin,
   Award,
-  CheckCircle,
   ArrowRight,
   ShieldCheck,
   Target,
   Users,
 } from "lucide-react";
-import { PROGRAMS, EVENTS } from "@/lib/mock-data";
+import { supabase, DbEvent } from "@/lib/supabase";
 
-export default function Home() {
-  const discoveryLab = PROGRAMS.find((p) => p.id === "discovery-lab")!;
-  const gracefulParenting = PROGRAMS.find((p) => p.id === "graceful-parenting")!;
-  const featuredEvent = EVENTS.find((e) => e.isActive);
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const { data: events } = await supabase
+    .from("events")
+    .select("*")
+    .eq("is_active", true)
+    .order("created_at", { ascending: true });
+
+  const activeEvents: DbEvent[] = events || [];
+  const featuredEvent = activeEvents[0];
 
   return (
     <div className="pb-20">
@@ -85,96 +90,57 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <span className="text-sm font-semibold uppercase tracking-widest text-forge-orange">
-            Our two pathways
+            Our programs
           </span>
           <h2 className="mt-2 text-3xl font-medium md:text-4xl">
-            One for the child. One for the parent.
+            Every program and event, in one place.
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <div className="flex flex-col justify-between rounded-3xl border border-black/10 p-8 shadow-sm dark:border-white/10 dark:bg-forge-surface">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-forge-orange/10 text-forge-orange">
-                  <Compass className="h-6 w-6" />
-                </div>
-                <span className="rounded-full bg-forge-orange/10 px-3 py-1 text-sm font-semibold text-forge-orange-dark dark:text-forge-orange">
-                  {discoveryLab.audience}
-                </span>
-              </div>
+        {activeEvents.length === 0 && (
+          <p className="text-center text-forge-black/60 dark:text-white/60">
+            New programs are on the way — check back soon.
+          </p>
+        )}
 
-              <div>
-                <h3 className="text-2xl font-medium">{discoveryLab.name}</h3>
-                <p className="mt-1 text-base font-medium text-forge-orange-dark dark:text-forge-orange">
-                  {discoveryLab.tagline}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          {activeEvents.map((event) => (
+            <div
+              key={event.id}
+              className="flex flex-col justify-between rounded-3xl border border-black/10 p-8 shadow-sm dark:border-white/10 dark:bg-forge-surface"
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-forge-orange/10 text-forge-orange">
+                    <Compass className="h-6 w-6" />
+                  </div>
+                  <span className="rounded-full bg-forge-orange/10 px-3 py-1 text-sm font-semibold text-forge-orange-dark dark:text-forge-orange">
+                    {event.audience}
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-medium">{event.title}</h3>
+                </div>
+
+                <p className="text-base text-forge-black/70 dark:text-white/70">
+                  {event.description}
                 </p>
               </div>
 
-              <p className="text-base text-forge-black/70 dark:text-white/70">
-                {discoveryLab.description}
-              </p>
-
-              <ul className="space-y-2 pt-2">
-                {discoveryLab.focusAreas.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm text-forge-black/70 dark:text-white/70">
-                    <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-forge-orange" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-6 dark:border-white/10">
-              <span className="text-sm font-medium text-forge-black/60 dark:text-white/60">
-                Next cohort: <strong className="text-forge-black dark:text-white">{discoveryLab.nextDate}</strong>
-              </span>
-              <Link
-                href="/programs"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-forge-orange-dark hover:text-forge-orange dark:text-forge-orange"
-              >
-                Details <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-between rounded-3xl border border-black/10 p-8 shadow-sm dark:border-white/10 dark:bg-forge-surface">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-forge-black/5 text-forge-black dark:bg-white/10 dark:text-white">
-                  <HeartHandshake className="h-6 w-6" />
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="rounded-full bg-forge-black/5 px-3 py-1 text-sm font-semibold text-forge-black/70 dark:bg-white/10 dark:text-white/70">
-                    {gracefulParenting.audience}
-                  </span>
-                  <span className="rounded-full bg-forge-black/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-forge-black/60 dark:bg-white/10 dark:text-white/60">
-                    Coming soon
-                  </span>
-                </div>
+              <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-6 dark:border-white/10">
+                <span className="text-sm font-medium text-forge-black/60 dark:text-white/60">
+                  <strong className="text-forge-black dark:text-white">{event.dates_label}</strong>
+                </span>
+                <Link
+                  href={`/events/${event.id}`}
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-forge-orange-dark hover:text-forge-orange dark:text-forge-orange"
+                >
+                  Details <ArrowRight className="h-4 w-4" />
+                </Link>
               </div>
-
-              <div>
-                <h3 className="text-2xl font-medium">{gracefulParenting.name}</h3>
-              </div>
-
-              <p className="text-base text-forge-black/70 dark:text-white/70">
-                {gracefulParenting.description}
-              </p>
             </div>
-
-            <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-6 dark:border-white/10">
-              <span className="text-sm font-medium text-forge-black/60 dark:text-white/60">
-                Details to be announced
-              </span>
-              <Link
-                href="/programs"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-forge-black/60 hover:text-forge-orange dark:text-white/60"
-              >
-                Learn more <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -209,34 +175,34 @@ export default function Home() {
                 <div className="space-y-1.5 border-t border-black/10 pt-3 text-sm text-forge-black/70 dark:border-white/10 dark:text-white/70">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-3.5 w-3.5 text-forge-orange" />
-                    <strong className="text-forge-black dark:text-white">{featuredEvent.dates}</strong>
-                    <span>({featuredEvent.time})</span>
+                    <strong className="text-forge-black dark:text-white">{featuredEvent.dates_label}</strong>
+                    <span>({featuredEvent.time_label})</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="h-3.5 w-3.5 text-forge-orange" />
                     {featuredEvent.location}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Award className="h-3.5 w-3.5 text-forge-orange" />
-                    Facilitator: <strong className="text-forge-black dark:text-white">{featuredEvent.facilitatorName}</strong> ({featuredEvent.facilitatorRole})
-                  </div>
+                  {featuredEvent.facilitator_name && (
+                    <div className="flex items-center gap-2">
+                      <Award className="h-3.5 w-3.5 text-forge-orange" />
+                      Facilitator: <strong className="text-forge-black dark:text-white">{featuredEvent.facilitator_name}</strong>
+                      {featuredEvent.facilitator_role ? ` (${featuredEvent.facilitator_role})` : ""}
+                    </div>
+                  )}
                 </div>
               </div>
 
               <div className="flex shrink-0 flex-col items-start justify-between gap-4 md:items-end md:text-right">
                 <div>
                   <span className="block text-sm font-semibold uppercase text-forge-black/50 dark:text-white/50">
-                    Registration fee
+                    {featuredEvent.price > 0 ? "Registration fee" : "Cost"}
                   </span>
                   <span className="text-2xl font-medium">
-                    ${featuredEvent.price} / child
-                  </span>
-                  <span className="mt-1 block text-sm text-forge-black/50 dark:text-white/50">
-                    {featuredEvent.slotsNote}
+                    {featuredEvent.price > 0 ? `$${featuredEvent.price} / child` : "Free"}
                   </span>
                 </div>
                 <Link
-                  href="/events"
+                  href={`/events/${featuredEvent.id}`}
                   className="inline-flex items-center justify-center rounded-xl bg-forge-orange px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-forge-orange-dark"
                 >
                   Register now
@@ -253,18 +219,17 @@ export default function Home() {
             Registrations are open
           </span>
           <h2 className="mx-auto mt-3 max-w-xl text-3xl font-medium md:text-4xl">
-            Reserve a spot in the Discovery Lab
+            Ready to get started?
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-base text-white/70">
-            Slots are limited for the Oct 9–10 session — register early to
-            secure your child&apos;s place.
+            Browse our current programs and reserve a spot today.
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/events"
               className="inline-flex w-full items-center justify-center rounded-xl bg-forge-orange px-7 py-3.5 font-medium text-white transition-colors hover:bg-forge-orange-dark sm:w-auto"
             >
-              Register now
+              View events
             </Link>
             <Link
               href="/contact"
