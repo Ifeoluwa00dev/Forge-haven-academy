@@ -26,6 +26,7 @@ export default function ContactPage() {
             </div>
             <div className="flex items-center gap-3">
               <Phone className="h-4 w-4 shrink-0 text-forge-orange" />
+              
               <a href="tel:+13465011249" className="hover:text-forge-orange">
                 +1 (346) 501-1249
               </a>
