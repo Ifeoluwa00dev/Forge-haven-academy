@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { Mail, Phone, MapPin, AtSign, Users } from "lucide-react";
 
-import { Mail, Phone, MapPin, Instagram, Facebook } from "lucide-react";
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-forge-black pt-14 pb-10 text-white">
@@ -93,7 +93,7 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Instagram className="h-4 w-4 shrink-0 text-forge-orange" />
+                <AtSign className="h-4 w-4 shrink-0 text-forge-orange" />
                 <a
                   href="https://instagram.com/forgehavenacademy"
                   target="_blank"
@@ -104,7 +104,7 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Facebook className="h-4 w-4 shrink-0 text-forge-orange" />
+                <Users className="h-4 w-4 shrink-0 text-forge-orange" />
                 <a
                   href="https://facebook.com/forgehavenacademy"
                   target="_blank"
