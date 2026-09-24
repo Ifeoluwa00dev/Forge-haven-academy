@@ -116,7 +116,7 @@ export default function AdminEventsPage() {
             <tbody>
               {events.map((e) => (
                 <tr key={e.id} className="border-t border-black/10 dark:border-white/10">
-                  <td className="px-4 py-3 font-medium">{e.title}</td>
+                  <td className="px-4 py-3 font-medium text-forge-black dark:text-white">{e.title}</td>
                   <td className="px-4 py-3 text-forge-black/70 dark:text-white/70">
                     {e.dates_label} ({e.time_label})
                   </td>
