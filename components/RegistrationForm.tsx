@@ -60,9 +60,7 @@ export default function RegistrationForm({
       setError("Please fill in your name, email, and phone number.");
       return;
     }
-    if (children.some((c) => !c.name)) {
-      setError("Please enter a name for each child.");
-      return;
+    
     }
         for (const field of customFields) {
       if (field.required && !customAnswers[field.id]) {
@@ -72,7 +70,11 @@ export default function RegistrationForm({
     }
 
     setSubmitting(true);
-
+// Name validation disabled — field is hidden per client request (Sep 2026).
+    // if (children.some((c) => !c.name)) {
+    //   setError("Please enter a name for each child.");
+    //   return;
+    // }
     const referenceNumber = `FHA-${Date.now().toString(36).toUpperCase()}`;
     // Generate the id ourselves so we never need to read the row back
     // (the anon role intentionally has no SELECT grant on registrations,
