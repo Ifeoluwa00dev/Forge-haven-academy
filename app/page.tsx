@@ -47,7 +47,7 @@ export default async function Home() {
           className="absolute inset-0"
           style={{
             backgroundImage:
-              "url('https://res.cloudinary.com/drkksaa3i/image/upload/v1790260320/pexels-yankrukov-8612958_mj7yvd.jpg')",
+              "url('https://res.cloudinary.com/drkksaa3i/image/upload/v1790303380/pexels-yankrukov-8612958_mj7yvd.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
