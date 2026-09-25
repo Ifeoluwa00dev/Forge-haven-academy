@@ -179,7 +179,7 @@ export default function RegistrationForm({
       }, 2000);
     }
   };
-  
+
   if (success) {
     return (
       <div className="flex items-start gap-3 rounded-2xl border border-forge-orange/20 bg-forge-orange/10 p-6 text-forge-orange-dark">
@@ -293,9 +293,9 @@ export default function RegistrationForm({
 
       {customFields.length > 0 && (
         <div className="space-y-4">
-          <label className="text-sm font-semibold text-forge-black/70 dark:text-white/70">
+          {/* <label className="text-sm font-semibold text-forge-black/70 dark:text-white/70">
             Additional information
-          </label>
+          </label> */}
           {customFields.map((field) => (
             <div key={field.id}>
               <label className="mb-1 block font-semibold text-sm text-forge-black/60 dark:text-white/60">
