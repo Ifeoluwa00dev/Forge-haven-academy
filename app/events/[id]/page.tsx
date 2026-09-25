@@ -52,7 +52,7 @@ export default async function EventDetailPage({
       </section>
 
       <section className="mx-auto max-w-4xl px-6 py-14">
-        <RegistrationForm
+                <RegistrationForm
           eventId={event.id}
           eventTitle={event.title}
           price={event.price}
@@ -60,6 +60,7 @@ export default async function EventDetailPage({
           datesLabel={event.dates_label}
           timeLabel={event.time_label}
           location={event.location}
+          redirectUrl={event.redirect_url}
           customFields={event.custom_fields || []}
         />
       </section>
