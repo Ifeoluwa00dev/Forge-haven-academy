@@ -68,7 +68,7 @@ export default async function Home() {
 
             <p className="mt-5 text-xl text-forge-black/70 dark:text-white/70">
               Forge Haven Academy runs mentorship and parenting programs for
-              children, teens, and their parents — practical, hands-on, and
+              children, teens, and their parents  practical, hands-on, and
               built around real growth, not theory.
             </p>
 
