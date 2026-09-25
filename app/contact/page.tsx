@@ -1,4 +1,5 @@
-import { Mail, Phone, MapPin, AtSign, Users } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
+import { FaInstagram, FaFacebook } from "react-icons/fa";
 import ContactForm from "@/components/ContactForm";
 
 export default function ContactPage() {
@@ -38,7 +39,7 @@ export default function ContactPage() {
               </a>
             </div>
             <div className="flex items-center gap-3">
-              <AtSign className="h-4 w-4 shrink-0 text-forge-orange" />
+              <FaInstagram className="h-4 w-4 shrink-0 text-forge-orange" />
               <a
                 href="https://instagram.com/forgehavenacademy"
                 target="_blank"
@@ -49,7 +50,7 @@ export default function ContactPage() {
               </a>
             </div>
             <div className="flex items-center gap-3">
-              <Users className="h-4 w-4 shrink-0 text-forge-orange" />
+              <FaFacebook className="h-4 w-4 shrink-0 text-forge-orange" />
               <a
                 href="https://facebook.com/forgehavenacademy"
                 target="_blank"

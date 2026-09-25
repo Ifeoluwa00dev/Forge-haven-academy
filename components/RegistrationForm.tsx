@@ -148,13 +148,8 @@ export default function RegistrationForm({
       }
     }
 
-    if (redirectUrl) {
-      const url = redirectUrl.startsWith("http") ? redirectUrl : `https://${redirectUrl}`;
-      window.location.href = url;
-      return;
-    }
-
-    // Free event — send confirmation immediately.
+        // Free event (with or without a redirect) — always send the
+    // confirmation email first.
     try {
       await fetch("/api/send-confirmation", {
         method: "POST",
@@ -175,9 +170,16 @@ export default function RegistrationForm({
       console.error("Failed to send confirmation email:", emailErr);
     }
 
-    setSuccess(`You're registered!.`);
-  };
+    setSuccess(`You're registered! Check your email for confirmation.`);
 
+    if (redirectUrl) {
+      const url = redirectUrl.startsWith("http") ? redirectUrl : `https://${redirectUrl}`;
+      setTimeout(() => {
+        window.location.href = url;
+      }, 2000);
+    }
+  };
+  
   if (success) {
     return (
       <div className="flex items-start gap-3 rounded-2xl border border-forge-orange/20 bg-forge-orange/10 p-6 text-forge-orange-dark">
@@ -239,13 +241,13 @@ export default function RegistrationForm({
           <label className="text-sm font-semibold text-forge-black/70 dark:text-white/70">
             Child(ren)'s registration
           </label>
-          <button
+          {/* <button
             type="button"
             onClick={addChild}
             className="inline-flex items-center gap-1 text-sm font-semibold text-forge-orange-dark hover:text-forge-orange dark:text-forge-orange"
           >
             <Plus className="h-3.5 w-3.5" /> Add another child
-          </button>
+          </button> */}
         </div>
 
         {children.map((child, idx) => (
@@ -296,7 +298,7 @@ export default function RegistrationForm({
           </label>
           {customFields.map((field) => (
             <div key={field.id}>
-              <label className="mb-1 block text-sm text-forge-black/60 dark:text-white/60">
+              <label className="mb-1 block font-semibold text-sm text-forge-black/60 dark:text-white/60">
                 {field.label} {field.required && <span className="text-forge-orange">*</span>}
               </label>
 
