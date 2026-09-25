@@ -15,10 +15,13 @@ export default function TeamPage() {
       <section className="mx-auto max-w-6xl space-y-20 px-6 py-16">
         {/* Olabisi Olaleye — photo left */}
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start">
-          <div className="overflow-hidden rounded-3xl border border-black/10 dark:border-white/10">
-            <div className="flex aspect-[4/5] items-center justify-center bg-forge-orange/10 text-6xl font-bold text-forge-orange">
-              OO
-            </div>
+                    <div className="overflow-hidden rounded-3xl border border-black/10 dark:border-white/10">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://res.cloudinary.com/drkksaa3i/image/upload/v1790303565/WhatsApp_Image_2026-09-17_at_10.52.58_PM_uvydgl.jpg"
+              alt="Olabisi Olaleye"
+              className="aspect-[4/5] w-full object-cover"
+            />
             <div className="border-t border-black/10 bg-white p-4 dark:border-white/10 dark:bg-forge-surface">
               <p className="font-medium">Olabisi Olaleye</p>
               <p className="text-xs font-semibold uppercase tracking-wider text-forge-orange">
@@ -152,14 +155,17 @@ export default function TeamPage() {
             </div>
           </div>
 
-          <div className="order-1 overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 lg:order-2">
-            <div className="flex aspect-[4/5] items-center justify-center bg-forge-orange/10 text-6xl font-bold text-forge-orange">
-              FO
-            </div>
+                    <div className="order-1 overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 lg:order-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://res.cloudinary.com/drkksaa3i/image/upload/v1790303563/IMG_8091_e4pcor.jpg"
+              alt="Femi Olaleye"
+              className="aspect-[4/5] w-full object-cover"
+            />
             <div className="border-t border-black/10 bg-white p-4 dark:border-white/10 dark:bg-forge-surface">
               <p className="font-medium">Femi Olaleye</p>
               <p className="text-xs font-semibold uppercase tracking-wider text-forge-orange">
-                Team Member
+                Systems Quality Engineer, Apple
               </p>
             </div>
           </div>
