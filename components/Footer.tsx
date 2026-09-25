@@ -26,7 +26,7 @@ export default function Footer() {
           </div>
 
           {/* Programs */}
-          <div>
+          {/* <div>
             <h4 className="mb-4 text-xs font-semibold uppercase tracking-wider text-forge-orange">
               Programs
             </h4>
@@ -50,7 +50,7 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Academy */}
           <div>
