@@ -19,6 +19,7 @@ interface EventRow {
   dates_label: string;
   time_label: string;
   location: string;
+  location_type: string ;
   facilitator_name: string | null;
   facilitator_role: string | null;
   price: number;
@@ -55,10 +56,11 @@ export default function AdminEventsPage() {
   const startEdit = (e: EventRow) => {
     setEditingEvent({
       id: e.id,
-      title: e.title,
+            title: e.title,
       slug: e.slug || "",
       redirect_url: e.redirect_url || "",
       custom_fields: e.custom_fields || [],
+      location_type: e.location_type || "onsite",
       description: e.description || "",
       audience: e.audience || "",
       dates_label: e.dates_label,

@@ -12,6 +12,7 @@ interface EventFormData {
   slug: string;
   redirect_url: string;
    custom_fields: CustomField[];
+   location_type: string;
   description: string;
   audience: string;
   dates_label: string;
@@ -34,7 +35,8 @@ const EMPTY_FORM: EventFormData = {
   audience: "",
   dates_label: "",
   time_label: "",
-  location: "Onsite",
+  location: "",
+  location_type: "onsite",
   facilitator_name: "",
   facilitator_role: "",
   price: "0",
@@ -163,7 +165,7 @@ export default function CreateEventForm({
           />
         </div>
 
-        <div>
+                <div>
           <label className="mb-1 block text-xs font-semibold text-forge-black/70 dark:text-white/70">
             Location
           </label>
@@ -172,6 +174,20 @@ export default function CreateEventForm({
             onChange={(e) => update("location", e.target.value)}
             className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface-alt"
           />
+        </div>
+
+        <div>
+          <label className="mb-1 block text-xs font-semibold text-forge-black/70 dark:text-white/70">
+            Location type
+          </label>
+          <select
+            value={form.location_type}
+            onChange={(e) => update("location_type", e.target.value)}
+            className="w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface-alt"
+          >
+            <option value="onsite">Onsite (address hidden until registered)</option>
+            <option value="online">Online (location shown publicly)</option>
+          </select>
         </div>
 
         <div>

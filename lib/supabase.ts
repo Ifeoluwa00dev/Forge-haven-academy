@@ -13,6 +13,7 @@ export interface DbEvent {
   dates_label: string;
   time_label: string;
   location: string;
+  location_type: string;
   facilitator_name: string | null;
   facilitator_role: string | null;
   price: number;

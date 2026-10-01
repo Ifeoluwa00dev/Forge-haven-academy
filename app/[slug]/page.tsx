@@ -36,9 +36,11 @@ export default async function EventBySlugPage({
               <Calendar className="h-4 w-4 text-forge-orange" />
               <strong className="text-forge-black dark:text-white">{event.dates_label}</strong> ({event.time_label})
             </div>
-            <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-forge-orange" />
-              {event.location}
+              {event.location_type === "onsite"
+                ? "Location shared after registration"
+                : event.location}
             </div>
             {event.facilitator_name && (
               <div className="flex items-center gap-2">
