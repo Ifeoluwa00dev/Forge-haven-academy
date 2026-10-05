@@ -73,10 +73,10 @@ export default function RegistrationsTable({
           <label className="text-sm font-medium text-forge-black/70">
             Event:
           </label>
-          <select
+                    <select
             value={selectedEvent}
             onChange={(e) => setSelectedEvent(e.target.value)}
-            className="rounded-xl border border-black/15 px-3.5 py-2 text-sm outline-none focus:ring-2 focus:ring-forge-orange"
+            className="rounded-xl border border-black/15 px-3.5 py-2 text-sm outline-none focus:ring-2 focus:ring-forge-orange dark:border-white/15 dark:bg-forge-surface dark:text-white"
           >
             <option value="all">All events ({registrations.length})</option>
             {eventTitles.map((title) => {
@@ -99,7 +99,7 @@ export default function RegistrationsTable({
       {filtered.length > 0 && (
         <div className="overflow-x-auto rounded-2xl border border-black/10">
           <table className="w-full min-w-[900px] text-left text-sm">
-            <thead className="bg-forge-cream text-xs uppercase text-forge-black/60">
+                        <thead className="bg-forge-cream text-xs uppercase text-forge-black/60 dark:text-white/60">
               <tr>
                 <th className="px-4 py-3">Reference</th>
                 <th className="px-4 py-3">Event</th>

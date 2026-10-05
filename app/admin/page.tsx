@@ -36,9 +36,9 @@ export default async function AdminPage() {
     <div className="mx-auto max-w-6xl px-6 py-12">
       <AdminNav active="registrations" />
 
-      <div className="mb-6">
-        <h1 className="text-2xl font-medium">Registrations</h1>
-        <p className="mt-1 text-sm text-forge-black/60">
+            <div className="mb-6">
+        <h1 className="text-2xl font-medium text-forge-black dark:text-white">Registrations</h1>
+        <p className="mt-1 text-sm text-forge-black/60 dark:text-white/60">
           {registrations.length} total registration{registrations.length === 1 ? "" : "s"}
         </p>
       </div>

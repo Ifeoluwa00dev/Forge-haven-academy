@@ -84,8 +84,8 @@ export default function AdminEventsPage() {
     <div className="mx-auto max-w-6xl px-6 py-12">
       <AdminNav active="events" />
 
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-2xl font-medium">Manage events</h1>
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <h1 className="text-2xl font-medium text-forge-black dark:text-white">Manage events</h1>
       </div>
 
       <div className="mb-6">
