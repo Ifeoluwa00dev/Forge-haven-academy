@@ -170,6 +170,76 @@ export default function TeamPage() {
             </div>
           </div>
         </div>
+
+
+                {/* Femi Oke — photo left */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-start">
+          <div className="overflow-hidden rounded-3xl border border-black/10 dark:border-white/10">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://res.cloudinary.com/drkksaa3i/image/upload/v1791287880/3_1_ebtccu.jpg"
+              alt="Femi Oke"
+              className="aspect-[4/5] w-full object-cover"
+            />
+            <div className="border-t border-black/10 bg-white p-4 dark:border-white/10 dark:bg-forge-surface">
+              <p className="font-medium">Femi Oke</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-forge-orange">
+                Team Member
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <span className="text-xs font-semibold uppercase tracking-widest text-forge-orange">
+              Team
+            </span>
+            <h2 className="mt-2 text-2xl font-medium md:text-3xl">
+              Raising boys with intentionality.
+            </h2>
+
+            <div className="mt-5 space-y-4 text-base text-forge-black/70 dark:text-white/70">
+              <p>
+                Femi Oke takes delight in sharing practical insights that make
+                life more productive. He is a certified Scrum Professional, a
+                seasoned administrator, and a Pastor in a global and visionary
+                church movement where lives are being transformed daily.
+              </p>
+              <p>
+                As a boys&apos; dad himself, he is keen about raising boys with
+                keen-eyed intentionality. He understands perfectly that having
+                quality men in the society stems from having quality boys.
+              </p>
+              <p>
+                He is also a writer/speaker with a rich creative bank and he
+                always endeavors, in all his expressions, to enrich his
+                community with fresh and unique perspectives.
+              </p>
+              <p>
+                He lives in Lagos, Nigeria where together with his beloved
+                wife, he raises his boys with intricate wisdom.
+              </p>
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-black/10 p-6 dark:border-white/10 dark:bg-forge-surface">
+              <p className="text-xs font-semibold uppercase tracking-wider text-forge-black/60 dark:text-white/60">
+                Femi is passionate about:
+              </p>
+              <ul className="mt-3 space-y-2 text-sm text-forge-black/70 dark:text-white/70">
+                {[
+                  "Sharing practical insights for a more productive life",
+                  "Raising boys with keen-eyed intentionality",
+                  "Enriching his community through writing and speaking",
+                  "Building quality men by starting with quality boys",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-forge-orange" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );
