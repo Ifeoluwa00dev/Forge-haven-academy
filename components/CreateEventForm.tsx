@@ -11,7 +11,9 @@ interface EventFormData {
   title: string;
   slug: string;
   redirect_url: string;
-   custom_fields: CustomField[];
+     custom_fields: CustomField[];
+    feedback_questions: CustomField[];
+  feedback_open: boolean;
    location_type: string;
   description: string;
   audience: string;
@@ -30,7 +32,9 @@ const EMPTY_FORM: EventFormData = {
   title: "",
   slug: "",
   redirect_url: "",
-  custom_fields: [],
+    custom_fields: [],
+    feedback_questions: [],
+  feedback_open: false,
   description: "",
   audience: "",
   dates_label: "",
@@ -266,6 +270,26 @@ export default function CreateEventForm({
             fields={form.custom_fields}
             onChange={(fields) => update("custom_fields" as any, fields as any)}
           />
+                  <div className="sm:col-span-2">
+          <CustomFieldsEditor
+            fields={form.feedback_questions}
+            onChange={(fields) => update("feedback_questions" as any, fields as any)}
+            title="Feedback questions (optional)"
+            description="Questions parents answer on this event's feedback page. Leave empty to use the default questions."
+          />
+                  <div className="flex items-center gap-2 sm:col-span-2">
+          <input
+            type="checkbox"
+            id="feedback_open"
+            checked={form.feedback_open}
+            onChange={(e) => update("feedback_open", e.target.checked)}
+            className="h-4 w-4"
+          />
+          <label htmlFor="feedback_open" className="text-sm text-forge-black/70 dark:text-white/70">
+            Feedback is open (tick this after the event)
+          </label>
+        </div>
+        </div>
         </div>
                 <div>
           <label className="mb-1 block text-xs font-semibold text-forge-black/70 dark:text-white/70">

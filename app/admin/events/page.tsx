@@ -14,6 +14,8 @@ interface EventRow {
   slug: string | null;
   redirect_url: string | null;
   custom_fields: { id: string; label: string; type: string; required: boolean; options?: string[] }[];
+    feedback_questions: { id: string; label: string; type: string; required: boolean; options?: string[] }[];
+      feedback_open: boolean;
   description: string;
   audience: string;
   dates_label: string;
@@ -59,7 +61,9 @@ export default function AdminEventsPage() {
             title: e.title,
       slug: e.slug || "",
       redirect_url: e.redirect_url || "",
-      custom_fields: e.custom_fields || [],
+            custom_fields: e.custom_fields || [],
+            feedback_questions: e.feedback_questions || [],
+      feedback_open: e.feedback_open ?? false,
       location_type: e.location_type || "onsite",
       description: e.description || "",
       audience: e.audience || "",

@@ -6,9 +6,13 @@ import type { CustomField } from "@/lib/custom-fields";
 export default function CustomFieldsEditor({
   fields,
   onChange,
+  title = "Custom registration fields (optional)",
+  description = "These appear on the registration form for this event, in addition to the standard parent and child details.",
 }: {
   fields: CustomField[];
   onChange: (fields: CustomField[]) => void;
+  title?: string;
+  description?: string;
 }) {
   const addField = () => {
     onChange([
@@ -35,7 +39,7 @@ export default function CustomFieldsEditor({
     <div className="space-y-3 rounded-2xl border border-black/10 p-4 dark:border-white/10">
       <div className="flex items-center justify-between">
         <label className="text-xs font-semibold text-forge-black/70 dark:text-white/70">
-          Custom registration fields (optional)
+                    {title}
         </label>
         <button
           type="button"
@@ -47,8 +51,7 @@ export default function CustomFieldsEditor({
       </div>
 
       <p className="text-xs text-forge-black/50 dark:text-white/50">
-        These appear on the registration form for this event, in addition to
-        the standard parent and child details.
+        {description}
       </p>
 
       {fields.map((field, idx) => (

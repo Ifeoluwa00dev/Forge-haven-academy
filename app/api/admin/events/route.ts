@@ -36,6 +36,8 @@ export async function POST(req: NextRequest) {
     slug: body.slug || null,
     redirect_url: body.redirect_url || null,
     custom_fields: body.custom_fields || [],
+    feedback_questions: body.feedback_questions || [],
+    feedback_open: body.feedback_open === true,
     location_type: body.location_type || "onsite",
     description: description || "",
     audience: audience || "",
